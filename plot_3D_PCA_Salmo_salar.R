@@ -9,8 +9,7 @@ library(ggplot2)
 library(plot3D)
 
 # set working directory
-# setwd("/Users/ljchueca/Documents/_Trabajos_departamento/2023_MER_Master_Course/Salmo_salar_PCA")
-setwd("C:/Users/smarcos007/Desktop/MER2024/MER2023_3/salsal_PCA")
+setwd("/Users/ljchueca/Documents/_Trabajos_departamento/2023_MER_Master_Course/Salmo_salar_PCA")
 
 # read bamlist used with ANGSD
 bams <- read.table("bamlist")[,1]
@@ -33,6 +32,7 @@ eigenval <- pca$sdev^2
 explained_var <- 100*(eigenval/sum(eigenval))
 df1 <- data.frame(prin_comp = c(seq(1, length(eigenval))),
                   explained_var)
+
 ggplot(df1, aes(prin_comp, explained_var)) +
   geom_col(fill = c(rep("steelblue", 3),
                     rep("grey40", length(eigenval)-3))) +
@@ -80,10 +80,20 @@ cbPalette <- c("Russia" = "#F72585", #56B4E9
 # set point shapes
 shapes <- c(18, 15, 17, 8, 16) # Here you can find information about ggplot point shapes: http://www.sthda.com/english/wiki/ggplot2-point-shapes
 
-# save PCA plot in PDF
-pdf("Salsal_3dpca_plot.pdf", width = 8, height = 6)
+
+# simple PCA with 2 components
+pdf("Salsal_simple_pca_plot.pdf", width = 8, height = 6)
+
+ggplot(df2, aes(PC1, PC2, color = subpop, shape = pop)) +
+  geom_point(size = 5) +
+  scale_color_manual(values = cbPalette) +
+  scale_shape_manual(values = c(18, 15, 17, 8, 16))
+dev.off()
+
 
 # 3D PCA plot
+pdf("Salsal_3dpca_plot.pdf", width = 8, height = 6)
+
 layout(matrix(c(1, 1, 1, 0,
                 1, 1, 1, 0,
                 1, 1, 1, 2,
