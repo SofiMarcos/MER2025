@@ -22,9 +22,9 @@ C18_110_4;Simojoki;Baltic Sea;Baltic Sea
 C18_133_1c;Hofsá;Iceland;Iceland
 C18_133_2;Hofsá;Iceland;Iceland
 C18_133_3;Hofsá;Iceland;Iceland
-C19_002_1;Gaula;Norway;Europe
 C19_002_14;Gaula;Norway;Europe
 C19_002_16;Gaula;Norway;Europe
+C19_002_1;Gaula;Norway;Europe
 C19_002_2;Gaula;Norway;Europe
 C19_002_5;Gaula;Norway;Europe
 C19_004_5;Varzuga;Russia;Russia
@@ -46,8 +46,8 @@ C19_153_1;Kungsbacka;Sweden;Europe
 C19_154_1;Örekilsälven;Sweden;Europe
 C19_155_1;Orkla;Norway;Europe
 C19_216_1;Moy;Ireland;Europe
-Cuni_ENN1;Tay;Scotland;Europe
 Cuni_ENN10;Tay;Scotland;Europe
+Cuni_ENN1;Tay;Scotland;Europe
 Cuni_ENN2;Tay;Scotland;Europe
 Cuni_ENN4;Tay;Scotland;Europe
 Cuni_ENN5;Tay;Scotland;Europe
