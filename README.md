@@ -1,9 +1,7 @@
-# MER2023_3
-
 # Marine Resources Genomics 2024
 
 
-# Population Genomics: Excercise dataset
+## Population Genomics: Excercise dataset
 
 
 Load an interactive mode in Arina cluster
