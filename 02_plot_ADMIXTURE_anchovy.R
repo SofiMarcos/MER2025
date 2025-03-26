@@ -56,14 +56,14 @@ library(ggplot2)
 library(reshape2)
 
 # set working directory
-setwd("/Users/ljchueca/Documents/_Trabajos_departamento/2023_MER_Master_Course/Salmo_salar_Admixture")
+setwd("C:/Users/smarcos007/Documents/04_github/MER2025/anchovy_Admixture")
 
 # read bamlist used with ANGSD
 bams <- read.table("bamlist")[,1]
 
 # extract sample names from bamlist
-samples <- sub("/.*/", "", bams)
-samples <- sub("_removed_duplicates.bam", "", bams)
+samples_1 <- sub("/.*/", "", bams)
+samples <- sub("_removed_duplicates.bam", "", samples_1)
 
 # create a rank to keep the sample order of the bamlist
 rank <- c(seq(1, length(samples)))
@@ -133,3 +133,4 @@ multiplot(p2 + scale_fill_manual(values = c("#F72585", "#4361EE")),
 #0072B2 - Dark blue
 #666666 - Grey
 #873b00 - Brown
+

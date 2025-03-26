@@ -9,7 +9,7 @@ library(ggplot2)
 library(plot3D)
 
 # set working directory
-setwd("/Users/ljchueca/Documents/_Trabajos_departamento/2023_MER_Master_Course/Salmo_salar_PCA")
+setwd("C:/Users/smarcos007/Documents/04_github/MER2025/anchovy_PCA")
 
 # read bamlist used with ANGSD
 bams <- read.table("bamlist")[,1]
@@ -47,7 +47,7 @@ ggsave("scree_plot.pdf", width = 170, height = 92, units = "mm")
 df2 <- as.data.frame(pca$x)
 
 # Add column for populations
-pop <- read.table("Salmo_salar_localities.csv", sep = ";", header = TRUE)
+pop <- read.table("anchovy_localities.csv", sep = ";", header = TRUE)
 
 # Check if sample order in the metadata file is the same as in the pca dataframe
 pop$Sample == rownames(df2)
@@ -82,17 +82,18 @@ shapes <- c(18, 15, 17, 8, 16) # Here you can find information about ggplot poin
 
 
 # simple PCA with 2 components
-pdf("Salsal_simple_pca_plot.pdf", width = 8, height = 6)
+pdf("anchovy_simple_pca_plot.pdf", width = 8, height = 6)
 
 ggplot(df2, aes(PC1, PC2, color = subpop, shape = pop)) +
   geom_point(size = 5) +
   scale_color_manual(values = cbPalette) +
   scale_shape_manual(values = c(18, 15, 17, 8, 16))
+
 dev.off()
 
 
 # 3D PCA plot
-pdf("Salsal_3dpca_plot.pdf", width = 8, height = 6)
+pdf("anchovy_3dpca_plot.pdf", width = 8, height = 6)
 
 layout(matrix(c(1, 1, 1, 0,
                 1, 1, 1, 0,
