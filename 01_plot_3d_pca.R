@@ -9,9 +9,11 @@ library(ggplot2)
 library(plot3D)
 
 # set working directory
-setwd("C:/Users/smarcos007/Documents/04_github/MER2025/anchovy_PCA")
+setwd("C:/Users/smarcos007/Documents/04_github/MER2025/pca_data")
 
-# read bamlist used with ANGSD
+# read bamlist used with ANGSD to prune SNPS
+# pruning is the process of filtering out redundant or highly correlated SNPs to
+# reduce linkage disequilibrium, improve computational efficiency, and avoid biases
 bams <- read.table("bamlist")[,1]
 
 # extract sample names from bamlist
@@ -47,7 +49,7 @@ ggsave("scree_plot.pdf", width = 170, height = 92, units = "mm")
 df2 <- as.data.frame(pca$x)
 
 # Add column for populations
-pop <- read.table("anchovy_localities.csv", sep = ";", header = TRUE)
+pop <- read.table("localities.csv", sep = ";", header = TRUE)
 
 # Check if sample order in the metadata file is the same as in the pca dataframe
 pop$Sample == rownames(df2)
@@ -57,8 +59,7 @@ df2$subpop <- pop$Subpopulation
 df2$pop <- pop$Population
 
 # change the order of groups
-df2$pop <- factor(df2$pop,
-levels = c("Russia", "North America", "Iceland", "Baltic Sea","Europe"))
+df2$pop <- factor(df2$pop, levels = c("Russia", "North America", "Iceland", "Baltic Sea","Europe"))
 
 df2$subpop <- factor(df2$subpop,
                     levels = c("Russia", 
@@ -82,18 +83,39 @@ shapes <- c(18, 15, 17, 8, 16) # Here you can find information about ggplot poin
 
 
 # simple PCA with 2 components
-pdf("anchovy_simple_pca_plot.pdf", width = 8, height = 6)
+pdf("simple_pca_plot.pdf", width = 8, height = 6)
 
-ggplot(df2, aes(PC1, PC2, color = subpop, shape = pop)) +
+library(gridExtra)
+
+plot_a <- ggplot(df2, aes(PC1, PC2, color = subpop, shape = pop)) +
   geom_point(size = 5) +
   scale_color_manual(values = cbPalette) +
-  scale_shape_manual(values = c(18, 15, 17, 8, 16))
+  scale_shape_manual(values = c(18, 15, 17, 8, 16))+
+  theme_bw() +
+  theme(legend.position = "none") 
+
+plot_b <- ggplot(df2, aes(PC1, PC3, color = subpop, shape = pop)) +
+  geom_point(size = 5) +
+  scale_color_manual(values = cbPalette) +
+  scale_shape_manual(values = c(18, 15, 17, 8, 16))+
+  theme_bw() +
+  theme(legend.position = "none") 
+
+plot_c <- ggplot(df2, aes(PC2, PC3, color = subpop, shape = pop)) +
+  geom_point(size = 5) +
+  scale_color_manual(values = cbPalette) +
+  scale_shape_manual(values = c(18, 15, 17, 8, 16))+
+  theme_bw() +
+  theme(legend.position = "none") 
+ 
+
+grid.arrange(plot_a, plot_b, plot_c, ncol = 3)
 
 dev.off()
 
 
 # 3D PCA plot
-pdf("anchovy_3dpca_plot.pdf", width = 8, height = 6)
+pdf("3dpca_plot.pdf", width = 8, height = 6)
 
 layout(matrix(c(1, 1, 1, 0,
                 1, 1, 1, 0,
@@ -101,8 +123,13 @@ layout(matrix(c(1, 1, 1, 0,
                 1, 1, 1, 2),
               nrow = 4, ncol = 4, byrow = TRUE))
 par(mar = c(0, 0, 0, 0))
-scatter3D(df2$PC1, df2$PC2, df2$PC3, bty = "g", theta = 30, phi = 45,
-          colvar = NULL, colkey = FALSE, col = cbPalette[as.factor(df2$subpop)],
+scatter3D(df2$PC1, df2$PC2, df2$PC3,
+          bty = "g",
+          theta = 30,
+          phi = 45,
+          colvar = NULL,
+          colkey = FALSE,
+          col = cbPalette[as.factor(df2$subpop)],
           pch = shapes[as.factor(df2$pop)], cex = 2.5, cex.lab = 2,
           xlab = paste("PC1 (", round(explained_var[1], 2), "%)", sep = ""),
           ylab = paste("PC2 (", round(explained_var[2], 2), "%)", sep = ""),

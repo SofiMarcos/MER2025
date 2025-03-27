@@ -56,7 +56,7 @@ library(ggplot2)
 library(reshape2)
 
 # set working directory
-setwd("C:/Users/smarcos007/Documents/04_github/MER2025/anchovy_Admixture")
+setwd("C:/Users/smarcos007/Documents/04_github/MER2025/admixture_data")
 
 # read bamlist used with ANGSD
 bams <- read.table("bamlist")[,1]
